@@ -8,14 +8,14 @@
 
 
 # 100MB per trunk. Adjust it yourself
-TRUNKSIZE=$(echo "100 * 1024 * 1024" | bc)
+TRUNKSIZE=$(echo 100*1024*1024 | bc)
 
 url=$1
 
 filesize=$(curl -sI $url | awk '/Content-Length/ { print $2 }' | tr -d $'\r')
 filename=$(curl -sI $url | awk -F= '/filename/ { print $2 }' | tr -d $'\r')
 
-echo "FILE NAME: $filename"
+printf "FILE NAME: %s" $filename
 echo "FILE SIZE: $filesize"
 
 numoftrunk=$(echo "scale = 0; $filesize / $TRUNKSIZE" | bc)
